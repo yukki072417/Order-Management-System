@@ -10,7 +10,7 @@ services:
       - "5500:5500"
     # volumes:
     #   - ./Frontend:/usr/app/
-    command: npm run dev
+    # command: npm run dev
 
   backend:
     init: true
@@ -21,9 +21,9 @@ services:
       target: Backend
     ports:
       - "3000:3000"
-    # volumes:
-    #   - ./Backend:/usr/app/
-    command: node app.js
+    volumes:
+      - ./Backend:/usr/app/
+    # command: node app.js
 
   db:
     image: mysql:8.0

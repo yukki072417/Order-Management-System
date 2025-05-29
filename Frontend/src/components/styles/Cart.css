@@ -1,0 +1,10 @@
+.cart-contents{
+    margin: auto;
+
+    margin-top:    20px;
+    margin-bottom: 20px;
+}
+#order-submit{
+    display: block;
+    margin: 30px auto 0 auto; /* 上30px, 左右auto, 下0 */
+}

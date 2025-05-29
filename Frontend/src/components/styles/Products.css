@@ -1,0 +1,14 @@
+.col{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    
+    padding-top: 25px;
+}
+.add-cart{
+    width:  150px;
+    height: 50px;
+}
+.product-prices{
+    font-size: 18px;
+}

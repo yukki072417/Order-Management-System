@@ -18,8 +18,7 @@ export default function CartCard() {
 
   const confimOrder = () => {
     if(confirm('注文確定しますか?')){
-      location.assign('show-order')
-      fetch('/order', {
+      fetch('http://localhost:3000/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,12 +27,14 @@ export default function CartCard() {
       })
       .then((response) => {
         if (!response.ok) {
+          console.error('Network response was not ok');
           throw new Error('Network response was not ok');
         }
         return response.json();
       }).then((data) => {
         console.log('Success:', data);
         console.log(data);
+        // location.assign('show-order')
         // localStorage.setItem('order-number', String(100));
       }).catch((error) => {
         console.error('Error:', error);

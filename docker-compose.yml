@@ -1,21 +1,18 @@
 services:
   frontend:
-    init: true
-    stdin_open: true
-    container_name: Frontend
+    container_name: front_end
     build:
       context: .
       target: Frontend
     ports:
       - "5500:5500"
-    # volumes:
-    #   - ./Frontend:/usr/app/
-    # command: npm run dev
+    volumes:
+      - ./Frontend:/usr/app/
+      - /usr/app/node_modules  # ホストのnode_modulesを除外
+    command: sh -c "npm install && npm run dev"
 
   backend:
-    init: true
-    stdin_open: true
-    container_name: Backend
+    container_name: back_end
     build:
       context: .
       target: Backend
@@ -23,7 +20,8 @@ services:
       - "3000:3000"
     volumes:
       - ./Backend:/usr/app/
-    # command: node app.js
+      - /usr/app/node_modules  # ホストのnode_modulesを除外
+    command: sh -c "npm install && node app.js"
 
   db:
     image: mysql:8.0

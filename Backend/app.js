@@ -1,9 +1,11 @@
 import express from 'express';
-import router from './src/routes/route.js'
-// const router = require('./src/routes/route.js');
+import cors from 'cors';
+import router from './src/routes/route.js';
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
 
 app.use('/', router);
 

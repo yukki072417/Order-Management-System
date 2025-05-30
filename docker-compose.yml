@@ -1,5 +1,8 @@
 services:
   frontend:
+    init: true
+    stdin_open: true
+    tty: true
     container_name: front_end
     build:
       context: .
@@ -12,6 +15,9 @@ services:
     command: sh -c "npm install && npm run dev"
 
   backend:
+    init: true
+    stdin_open: true
+    tty: true
     container_name: back_end
     build:
       context: .
@@ -24,6 +30,9 @@ services:
     command: sh -c "npm install && node app.js"
 
   db:
+    init: true
+    stdin_open: true
+    tty: true
     image: mysql:8.0
     container_name: db
     volumes:

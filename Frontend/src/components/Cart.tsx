@@ -18,7 +18,7 @@ export default function CartCard() {
 
   const confimOrder = () => {
     if(confirm('注文確定しますか?')){
-      fetch('http://localhost:3000/order', {
+      fetch('http://localhost:3000/api/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

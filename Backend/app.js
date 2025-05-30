@@ -7,7 +7,7 @@ const PORT = 3000;
 
 app.use(cors());
 
-app.use('/', router);
+app.use('/api', router);
 
 app.listen(PORT, () => {
     console.log('Server launched PORT:' + PORT);

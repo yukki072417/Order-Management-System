@@ -14,7 +14,7 @@ api/order
             }
             ...以下同じデータが続く場合もある
         ]
-    レスポンス時: POST
+    レスポンス時
         成功時
             {
                 RESULT: 'SUCCESS'
@@ -28,7 +28,7 @@ api/order
 api/order-list
     リクエスト時: GET
         GETリクエストのため省略
-    レスポンス時: POST
+    レスポンス時
         {
             ORDER_NUMBER: 注文番号,
             ORDER_CONTENTS:[

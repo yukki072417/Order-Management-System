@@ -9,6 +9,11 @@
     width:  150px;
     height: 50px;
 }
-.product-prices{
-    font-size: 18px;
+.labels{
+    margin-top: 10px;
+}
+#add-egg-option, #add-beef-option{
+    margin-bottom: 10px;
+    width: 65px;
+    height: 25px;
 }

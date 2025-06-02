@@ -3,6 +3,12 @@ export type Product = {
   name: string
   price: number
   itemNum: number
-  addEgg: boolean
-  addBeef: boolean
+}
+
+export type CartItems = {
+  name: string
+  price: number
+  itemNum: number
+  addEgg:  Boolean
+  addBeef: Boolean
 }

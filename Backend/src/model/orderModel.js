@@ -1,38 +1,35 @@
 import express from 'express';
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
 
-app.OrderModel = (req, res) => {
-
-    const db = mysql.createConnection({
+app.OrderModel = async (req, res) => {
+    const db = await mysql.createConnection({
         host: 'db',
         user: process.env.DB_USER || 'root',
         password: process.env.ROOT_PASSWORD || 'ROOT',
         database: 'TICKETSYSTEM'
     });
 
-    db.connect((err) => {
-        if (err) {
-            console.error('データベースの接続が失敗:', err.stack);
-            res.status(500).json({ error: 'Database connection failed' });
-            return;
-        }
-        console.log('データベースが接続されました');
-    });
+    try {
+        const [results] = await db.query('SELECT * FROM ORDERS');
 
-    db.query('SELECT * FROM `ORDERS`', (err, results) => {
-        if (err) {
-            console.error('Query failed:', err.stack);
-            res.status(500).json({ error: 'Query failed' });
-            return;
-        }
-        console.log(results);
-        res.status(200).json({ message: 'Response successfully', data: results });
-    });
+        const LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
+        // const ORDER_NUMBER = ()
+        console.log(req.body);
 
-}
+        // db.query('INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG) VALUES (?, ?, ? ,?, ?)', [LAST_ORDER_NUMBER,])
+        console.log(LAST_ORDER_NUMBER);
+        
+        res.status(200).json(LAST_ORDER_NUMBER);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database query failed');
+    } finally {
+        db.end();
+    }
+};
 
 export default app;

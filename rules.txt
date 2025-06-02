@@ -6,35 +6,31 @@ api/order
     リクエスト時: POST
         [
             {
-                NAME: 製品の名前:文字列型
-                PRICE: 値段:整数型
-                ITEM_NAME: 製品の個数:整数型
-                ADD_EGG:  卵の追加の有無:ブール型
+                NAME: 製品の名前:文字列型,
+                PRICE: 値段:整数型,
+                ITEM_NAME: 製品の個数:整数型,
+                ADD_EGG:  卵の追加の有無:ブール型,
                 ADD_BEEF: 肉の追加の有無:ブール型
             }
             ...以下同じデータが続く場合もある
         ]
     レスポンス時: POST
         成功時
-            [
-                {
-                    RESULT: 'SUCCESS'
-                }
-            ]
+            {
+                RESULT: 'SUCCESS'
+            }
         失敗時
-            [
-                {
-                    RESULT: 'FAILED'
-                    MESSAGE: エラーメッセージ:整数型
-                }   
-            ]
+            {
+                RESULT: 'FAILED',
+                MESSAGE: エラーメッセージ:整数型
+            }
 
 api/order-list
     リクエスト時: GET
         GETリクエストのため省略
     レスポンス時: POST
         {
-            ORDER_NUMBER: 注文番号
+            ORDER_NUMBER: 注文番号,
             ORDER_CONTENTS:[
                 { PRODUCT_NAME: 商品名, ADD_EGG: ブール型, ADD_BEEF: ブール型}
                 //補足　ADD_EGG, ADD_BEEFは卵を追加されている場合のみTRUEを返す。デフォルトはFALSE

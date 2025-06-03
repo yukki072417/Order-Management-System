@@ -7,6 +7,7 @@ import type { CartItems } from '../type';
 
 export default function CartCard() {
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
+  const URL = "http://localhost:3000/api/order"
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -18,7 +19,7 @@ export default function CartCard() {
   const confimOrder = () => {
 
       if(confirm('注文確定しますか?')){
-        fetch('http://localhost:3000/api/order', {
+        fetch(URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -32,12 +33,9 @@ export default function CartCard() {
           }
           return response.json();
         }).then((data) => {
-          console.log('Success:', data);
-          console.log(data);
-          // location.assign('show-order')
-          // localStorage.setItem('order-number', String(100));
+          if(data.RESULT == 'SUCCESS') return location.assign('/products');
         }).catch((error) => {
-          console.error('Error:', error);
+          console.error('Error:', JSON.stringify(error));
         });
       
     }

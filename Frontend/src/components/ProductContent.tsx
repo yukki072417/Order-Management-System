@@ -24,7 +24,7 @@ export default function ProductContent(props: ProductContentProps) {
             <Form.Check
               type="switch"
               id="add-egg-option"
-              onChange={(e) => {}}
+              onChange={(e) => {setAddEgg(e.target.checked)}}
             />
             <label className="labels">お肉を追加(+100円)</label>
             <Form.Check

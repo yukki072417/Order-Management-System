@@ -6,6 +6,9 @@ dotenv.config();
 const app = express();
 
 app.OrderModel = async (req, res) => {
+
+    console.log(req.body);
+
     const db = await mysql.createConnection({
         host: 'db',
         user: process.env.DB_USER || 'root',

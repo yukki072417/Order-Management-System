@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import type { CartItems, Product } from "./type.ts";
 import Products from "./components/Product.tsx";
 import Cart from "./components/Cart.tsx";
-import ShowNumber from "./components/ShowNumber.tsx";
+import OrderList from "./components/OrderList.tsx";
 
 export default function App() {
   const productItems: Product[] = [
@@ -34,6 +34,9 @@ export default function App() {
       // 既存商品の itemNum を増やす
       existingProduct.itemNum += cartItems.itemNum;
     } else {
+
+      if(cartItems.addEgg == true)  cartItems.price += 100
+      if(cartItems.addBeef == true) cartItems.price += 100
       // 新しい商品を追加
       updatedCart.push(cartItems);
     }
@@ -64,7 +67,7 @@ export default function App() {
             element={<Products products={productItems} addCart={addCart} />}
           />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/show-order" element={<ShowNumber />} />
+          <Route path="/order-list" element={<OrderList />} />
         </Routes>
       </Router>
     </CartContext.Provider>

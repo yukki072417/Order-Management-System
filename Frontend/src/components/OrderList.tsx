@@ -1,22 +1,23 @@
-import "react";
-import "./styles/OrderList.css";
-import { useEffect, useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import 'react';
+import './styles/OrderList.css';
+import { useEffect, useState } from 'react';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const OrderList = () => {
-  const URL = "http://localhost:3000/api/order-list";
+  const URL = 'http://localhost:3000/api/order-list';
   const [orders, setOrders] = useState<any[]>([]); // レスポンスデータを格納する状態
 
   useEffect(() => {
     fetch(URL, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.VITE_X_API_KEY
       },
     })
       .then((response) => {
         if (!response.ok) {
-          console.error("Network response was not ok", response.status, response.statusText);
+          console.error('Network response was not ok', response.status, response.statusText);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
@@ -25,7 +26,7 @@ const OrderList = () => {
         setOrders(data); // レスポンスデータを状態に保存
       })
       .catch((error) => {
-        console.error("Fetch error:", error.message);
+        console.error('Fetch error:', error.message);
       });
   }, []);
   
@@ -50,25 +51,25 @@ const OrderList = () => {
   }
 
   return (
-    <Row xs={1} md={4} className="g-4">
+    <Row xs={1} md={4} className='g-4'>
       {orders.map((order, index) => (
         <Col key={index}>
           <Card style={{ width: '14rem' }}>
-            <Card.Body className="order-box">
+            <Card.Body className='order-box'>
               <Card.Title>注文番号: {order.ORDER_NUMBER}</Card.Title>
               <Card.Text>
                 {order.ORDER_CONTENTS.map((item: any, idx: number) => (
-                  <div className="order-content-box" key={idx}>
-                    <div className="order-title">商品名: {item.PRODUCT_NAME}</div>
+                  <div className='order-content-box' key={idx}>
+                    <div className='order-title'>商品名: {item.PRODUCT_NAME}</div>
                     <div
-                      style={{ color: item.ADD_EGG ? "red" : "inherit" }}
+                      style={{ color: item.ADD_EGG ? 'red' : 'inherit' }}
                     >
-                      卵追加: {item.ADD_EGG ? "あり" : "なし"}
+                      卵追加: {item.ADD_EGG ? 'あり' : 'なし'}
                     </div>
                     <div
-                      style={{ color: item.ADD_BEEF ? "red" : "inherit" }}
+                      style={{ color: item.ADD_BEEF ? 'red' : 'inherit' }}
                     >
-                      肉追加: {item.ADD_BEEF ? "あり" : "なし"}
+                      肉追加: {item.ADD_BEEF ? 'あり' : 'なし'}
                     </div>
                   </div>
                 ))}

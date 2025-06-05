@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const OrderList = () => {
+<<<<<<< HEAD
   const URL = 'http://localhost:3000/api/order-list';
   const [orders, setOrders] = useState<any[]>([]); // レスポンスデータを格納する状態
 
@@ -29,7 +30,59 @@ const OrderList = () => {
         console.error('Fetch error:', error.message);
       });
   }, []);
+=======
+  const URL = "ws://localhost:3000/ws/order-list";
+  const [orders, setOrders] = useState<any[]>([]); // レスポンスデータを格納する状態
+
+  // useEffect(() => {
+  //   fetch(URL, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         console.error("Network response was not ok", response.status, response.statusText);
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setOrders(data); // レスポンスデータを状態に保存
+  //     })
+  //     .catch((error) => {
+  //       console.error("Fetch error:", error.message);
+  //     });
+  // }, []);
+>>>>>>> e3f54331ef718e9ba61072d728e984789913157d
   
+  useEffect(() => {
+    // WebSocketサーバーに接続
+    const ws = new WebSocket(URL);
+
+    ws.onopen = () => {
+      console.log("WebSocket connected");
+      // 必要ならここでサーバーにメッセージ送信も可能
+      ws.send("Hello Server!");
+    };
+
+    ws.onmessage = (event) => {
+      console.log("WebSocket message:", event.data);
+      // サーバーからのデータをordersに反映したい場合
+      // setOrders(JSON.parse(event.data));
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    // クリーンアップ
+    // return () => {
+    //   ws.close();
+    // };
+  }, []);
+
   const completeOrder = (targetOrder: any) => {
 
     const _data = {

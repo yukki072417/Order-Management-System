@@ -45,5 +45,4 @@ api/order-list
 データベース構造規定
 
 ORDERSテーブル
-ORDER_NUMBER(注文番号) | PRODUCT_NAME(商品名) | ADD_BEEF(肉追加のオプション) | ADD_EGG(肉追加のオプション)
-ORDER_TIME(注文時の時間) <- 後付けで実装予定
+ORDER_NUMBER(注文番号) | PRODUCT_NAME(商品名) | ADD_BEEF(肉追加のオプション) | ADD_EGG(肉追加のオプション) | ORDER_TIME(注文時の時間) 

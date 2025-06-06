@@ -16,10 +16,7 @@ api/order
         ]
     レスポンス時
         成功時
-            {
-                RESULT: 'SUCCESS'
-                ORDER_NUMBER: 101 (整数型)
-            }
+            200番レスポンスを返す
         失敗時
             {
                 RESULT: 'FAILED',
@@ -41,3 +38,13 @@ api/order-list
                 ORDER_CONTENTS:[以下内容省略]
             ]
         }
+
+api/order リクエスト時にORDERSテーブルに対して保存するデータ形式
+    ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_EGG, ADD_BEEF, ORDER_TIME
+    
+    ORDER_NUMBER: 注文番号(整数型)
+    PRODUCT_NAME: 商品名（文字列型）
+    PRODUCT_QUANTITY: 注文個数(整数型)
+    ADD_EGG: 卵の追加オプション(ブール型, 0と1で表現)
+    ADD_BEEF: お肉の追加オプション(ブール型, 0と1で表現)
+    ORDER_TIME: 注文時間(TIME型)

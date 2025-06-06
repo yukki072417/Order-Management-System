@@ -1,7 +1,7 @@
-import "react";
-import "./styles/OrderList.css";
-import { useEffect, useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import 'react';
+import './styles/OrderList.css';
+import { useEffect, useState } from 'react';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const OrderList = () => {
   const URL = "ws://localhost:3000/ws/order-list";
@@ -39,7 +39,7 @@ const OrderList = () => {
   };
 
   return (
-    <Row xs={1} md={4} className="g-4">
+    <Row xs={1} md={4} className='g-4'>
       {orders.map((order, index) => (
         <Col key={index}>
           <Card style={{ width: "14rem" }}>

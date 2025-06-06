@@ -34,10 +34,15 @@ api/order-list
             [
                 ORDER_NUMBER: 注文番号,
                 ORDER_CONTENTS:[
-                    { PRODUCT_NAME: 商品名, ADD_EGG: ブール型, ADD_BEEF: ブール型}
+                    { PRODUCT_NAME: 商品名, ADD_EGG: ブール型, ADD_BEEF: ブール型, PRODUCT_QUANTITY: 整数型, ORDER_TIME: TIME型(Mysql準拠)}
                     //補足　ADD_EGG, ADD_BEEFは卵を追加されている場合のみTRUEを返す。デフォルトはFALSE
                 ],
                 ORDER_NUMBER: 注文番号,
                 ORDER_CONTENTS:[以下内容省略]
             ]
         }
+
+データベース構造規定
+
+ORDERSテーブル
+ORDER_NUMBER(注文番号) | PRODUCT_NAME(商品名) | ADD_BEEF(肉追加のオプション) | ADD_EGG(肉追加のオプション) | ORDER_TIME(注文時の時間) 

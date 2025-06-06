@@ -4,6 +4,7 @@ import type { CartItems, Product } from "./type.ts";
 import Products from "./components/Product.tsx";
 import Cart from "./components/Cart.tsx";
 import OrderList from "./components/OrderList.tsx";
+import 'dotenv';
 
 export default function App() {
   const productItems: Product[] = [

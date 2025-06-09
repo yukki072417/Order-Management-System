@@ -16,31 +16,36 @@ const OrderList = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      setOrders(data); // 受信データをセット
+      // データが異なる場合のみ更新
+      if (JSON.stringify(data) !== JSON.stringify(orders)) {
+        setOrders(data);
+      }
     };
 
     ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      console.error(error);
     };
 
     return () => {
       ws.close();
     };
+    // ordersを依存配列に含めると無限ループになるため空配列のまま
+    // eslint-disable-next-line
   }, []);
 
   const completeOrder = (targetOrder: any) => {
-
-    if(confirm('注文完了してよろしいですか？')){
+    if (confirm('注文完了してよろしいですか？')) {
       const _data = {
         ORDER_NUMBER: targetOrder.ORDER_NUMBER,
       };
       console.log(_data);
+      // ここで注文完了APIを呼び出す処理を追加できます
     }
   };
 
   return (
     <Row xs={1} md={4} className='g-4'>
-      {orders.map((order, index) => (
+      {orders.map((order: any, index: number) => (
         <Col key={index}>
           <Card style={{ width: "14rem" }}>
             <Card.Body className="order-box">

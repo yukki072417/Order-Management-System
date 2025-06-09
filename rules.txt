@@ -29,13 +29,17 @@ api/order-list
     レスポンス時
         {
             [
-                ORDER_NUMBER: 注文番号,
-                ORDER_CONTENTS:[
-                    { PRODUCT_NAME: 商品名, ADD_EGG: ブール型, ADD_BEEF: ブール型, PRODUCT_QUANTITY: 整数型, ORDER_TIME: TIME型(Mysql準拠)}
-                    //補足　ADD_EGG, ADD_BEEFは卵を追加されている場合のみTRUEを返す。デフォルトはFALSE
-                ],
-                ORDER_NUMBER: 注文番号,
-                ORDER_CONTENTS:[以下内容省略]
+                {
+                    ORDER_NUMBER: 注文番号,
+                    ORDER_CONTENTS:[
+                        { PRODUCT_NAME: 商品名, ADD_EGG: ブール型, ADD_BEEF: ブール型, PRODUCT_QUANTITY: 整数型, ORDER_TIME: TIME型(Mysql準拠)}
+                        //補足　ADD_EGG, ADD_BEEFは卵を追加されている場合のみTRUEを返す。デフォルトはFALSE
+                    ]
+                },
+                {
+                    ORDER_NUMBER: 注文番号,
+                    ORDER_CONTENTS:[以下内容省略]
+                }
             ]
         }
 

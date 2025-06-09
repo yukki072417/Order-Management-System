@@ -8,7 +8,7 @@ api/order
             {
                 NAME:       製品の名前:文字列型,
                 PRICE:      値段:整数型,
-                ITEM_NAME:  製品の個数:整数型,
+                ITEM_QUANTITY:  製品の個数:整数型,
                 ADD_EGG:    卵の追加の有無:ブール型,
                 ADD_BEEF:   肉の追加の有無:ブール型
             }

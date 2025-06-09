@@ -12,12 +12,25 @@ export default function CartCard() {
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
+    if (savedCart !== null) {
       setCartItems(JSON.parse(savedCart));
     }
   }, []);
 
   const confimOrder = () => {
+
+    let datas: any[] = []
+    cartItems.map(data => {
+      const content: CartItems = data;
+      const body = {
+        NAME: content.name,
+        PRICE: content.price,
+        ITEM_QUANTITY: content.itemNum,
+        ADD_EGG: content.addEgg,
+        ADD_BEEF: content.addBeef
+      }
+      datas.push(body);
+    });
 
       if(confirm('注文確定しますか?')){
         fetch(URL, {
@@ -26,7 +39,7 @@ export default function CartCard() {
             'Content-Type': 'application/json',
             'x-api-key': import.meta.env.VITE_X_API_KEY
           },
-          body: JSON.stringify(cartItems),
+          body: JSON.stringify(datas),
         })
         .then((response) => {
           if (!response.ok) {
@@ -42,9 +55,28 @@ export default function CartCard() {
         }).catch((error) => {
           console.error('Error:', JSON.stringify(error));
         });
-      
     }
   };
+
+  const deleteCartItem = (cartItem: CartItems) => {
+    const savedCart = localStorage.getItem('cart');
+    let localStrageContent: CartItems[] = [];
+    if (savedCart !== null) localStrageContent = JSON.parse(savedCart);
+
+    // 条件に合うものを除外
+    const newCart = localStrageContent.filter(
+      content =>
+        !(
+          content.name === cartItem.name &&
+          content.addEgg === cartItem.addEgg &&
+          content.addBeef === cartItem.addBeef
+        )
+    );
+
+    // localStorageとstateを更新
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    setCartItems(newCart);
+  }
 
   return (
     <>
@@ -59,6 +91,7 @@ export default function CartCard() {
                   <Card.Text className='cart-prices'>{cartItem.itemNum}個</Card.Text>
                   {cartItem.addEgg && <Card.Text>卵追加 (+100円)</Card.Text>}
                   {cartItem.addBeef && <Card.Text>お肉追加 (+100円)</Card.Text>}
+                  <Button variant='danger' onClick={() => deleteCartItem(cartItem)}>削除</Button>
                 </Card.Body>
               </Card>
             </Col>

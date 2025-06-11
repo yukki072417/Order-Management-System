@@ -8,6 +8,30 @@ const app = express();
 app.OrderModel = async (req, res) => {
 
     console.log(req.body);
+    const body = req.body[0];
+
+    const name = body.NAME;
+    const quantity = body.ITEM_QUANTITY;
+    const beef = body.ADD_BEEF;
+    const egg = body.ADD_EGG;
+    
+
+    //時間の取得
+    const now = new Date();
+    console.log(now); // 例: 2025-06-11T04:15:00.000Z    
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    const mysqlTime = `${hours}:${minutes}:${seconds}`;
+
+    console.log(mysqlTime); // 例: "09:03:07"
+
+
+    
+    
+    
+    console.log(name);
 
     const db = await mysql.createConnection({
         host: 'db',
@@ -20,10 +44,9 @@ app.OrderModel = async (req, res) => {
         const [results] = await db.query('SELECT * FROM ORDERS');
 
         const LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
-        // const ORDER_NUMBER = ()
         console.log(req.body);
 
-        // db.query('INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG) VALUES (?, ?, ? ,?, ?)', [LAST_ORDER_NUMBER,])
+        db.query('INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG, ORDER_TIME) VALUES (?, ?, ? ,?, ?, ?)', [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]);
         console.log(LAST_ORDER_NUMBER);
         
         res.status(200).json(LAST_ORDER_NUMBER);

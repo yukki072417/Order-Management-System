@@ -9,7 +9,7 @@ const PORT = 3000;
 
 app.use(cors());
 expressWs(app)
-websocket(app); // ここでWebSocketルートを登録bSocketルートを登録
+websocket(app);
 app.use('/api', router);
 
 app.listen(PORT, () => {

@@ -45,13 +45,11 @@ export default function CartCard() {
           if (!response.ok) {
             console.error('Network response was not ok');
             throw new Error('Network response was not ok');
-          }
-          return response.json();
-        }).then((data) => {
-          if(data.RESULT == 'SUCCESS'){
+          }else if(response.status == 200){
             localStorage.clear();
             return location.assign('/products');
           }
+          return response.json();
         }).catch((error) => {
           console.error('Error:', JSON.stringify(error));
         });

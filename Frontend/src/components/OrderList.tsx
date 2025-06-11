@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const OrderList = () => {
-  const URL = "ws://localhost:3000/ws/order-list";
+  const WS_URL = "ws://localhost:3000/ws/order-list";
   const [orders, setOrders] = useState<any[]>([]);
 
+  // WebSocketで受信したデータをlocalStorageとstateに保存
   useEffect(() => {
-    const ws = new WebSocket(URL);
+    const ws = new WebSocket(WS_URL);
 
     ws.onopen = () => {
       console.log("WebSocket connected");
@@ -17,8 +18,9 @@ const OrderList = () => {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       // データが異なる場合のみ更新
-      if (JSON.stringify(data) !== JSON.stringify(orders)) {
+      if (JSON.stringify(data) !== localStorage.getItem('orders')) {
         setOrders(data);
+        localStorage.setItem('orders', JSON.stringify(data));
       }
     };
 
@@ -29,17 +31,42 @@ const OrderList = () => {
     return () => {
       ws.close();
     };
-    // ordersを依存配列に含めると無限ループになるため空配列のまま
-    // eslint-disable-next-line
   }, []);
 
-  const completeOrder = (targetOrder: any) => {
+  // localStorageからデータを取得してstateに反映（リロード時用）
+  useEffect(() => {
+    const saved = localStorage.getItem('orders');
+    if (saved) {
+      setOrders(JSON.parse(saved));
+    }
+
+  }, []);
+
+  const completeOrder = async (targetOrder: any) => {
     if (confirm('注文完了してよろしいですか？')) {
-      const _data = {
+      const data = {
         ORDER_NUMBER: targetOrder.ORDER_NUMBER,
       };
-      console.log(_data);
-      // ここで注文完了APIを呼び出す処理を追加できます
+
+      const URL = 'http://localhost:3000/api/complete-order/';
+      fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          const text = await response.text();
+          console.error('Network response was not ok', text);
+          throw new Error('Network response was not ok');
+        }
+        
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
   };
 

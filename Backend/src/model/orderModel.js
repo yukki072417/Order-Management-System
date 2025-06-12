@@ -43,7 +43,15 @@ app.OrderModel = async (req, res) => {
     try {
         const [results] = await db.query('SELECT * FROM ORDERS');
 
-        const LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
+        let LAST_ORDER_NUMBER = 0;
+
+        if(results == 0){
+            LAST_ORDER_NUMBER = 101;
+        }
+        else{
+             LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
+        }
+        
         console.log(req.body);
 
         db.query('INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG, ORDER_TIME) VALUES (?, ?, ? ,?, ?, ?)', [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]);

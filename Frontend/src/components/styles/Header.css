@@ -10,3 +10,9 @@
     display: flex;
     justify-content: right;
 }
+#order-list-link{
+    margin-right: 20px;
+
+    color: white;
+    font-size: 18px;
+}

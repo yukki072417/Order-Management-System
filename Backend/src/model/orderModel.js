@@ -6,32 +6,14 @@ dotenv.config();
 const app = express();
 
 app.OrderModel = async (req, res) => {
+    const body = req.body; // 配列で受け取る
 
-    console.log(req.body);
-    const body = req.body[0];
-
-    const name = body.NAME;
-    const quantity = body.ITEM_QUANTITY;
-    const beef = body.ADD_BEEF;
-    const egg = body.ADD_EGG;
-    
-
-    //時間の取得
     const now = new Date();
-    console.log(now); // 例: 2025-06-11T04:15:00.000Z    
+    now.setHours(now.getHours() + 9); // 日本時間
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    
     const mysqlTime = `${hours}:${minutes}:${seconds}`;
-
-    console.log(mysqlTime); // 例: "09:03:07"
-
-
-    
-    
-    
-    console.log(name);
 
     const db = await mysql.createConnection({
         host: 'db',
@@ -41,23 +23,31 @@ app.OrderModel = async (req, res) => {
     });
 
     try {
-        const [results] = await db.query('SELECT * FROM ORDERS');
-
-        let LAST_ORDER_NUMBER = 0;
-
-        if(results == 0){
-            LAST_ORDER_NUMBER = 101;
+        // 最新のORDER_NUMBERを取得
+        const [results] = await db.query('SELECT ORDER_NUMBER FROM ORDER_LOG ORDER BY ORDER_NUMBER DESC LIMIT 1');
+        let LAST_ORDER_NUMBER = 101;
+        if (results && results.length > 0) {
+            LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
         }
-        else{
-             LAST_ORDER_NUMBER = Number(results[0].ORDER_NUMBER) + 1;
-        }
-        
-        console.log(req.body);
 
-        db.query('INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG, ORDER_TIME) VALUES (?, ?, ? ,?, ?, ?)', [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]);
-        console.log(LAST_ORDER_NUMBER);
-        
-        res.status(200).json(LAST_ORDER_NUMBER);
+        // すべての商品を1つの注文番号で登録
+        for (const item of body) {
+            const name = item.NAME;
+            const quantity = item.ITEM_QUANTITY;
+            const beef = item.ADD_BEEF;
+            const egg = item.ADD_EGG;
+
+            await db.query(
+                'INSERT INTO ORDERS (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG, ORDER_TIME) VALUES (?, ?, ?, ?, ?, ?)',
+                [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]
+            );
+            await db.query(
+                'INSERT INTO ORDER_LOG (ORDER_NUMBER, PRODUCT_NAME, PRODUCT_QUANTITY, ADD_BEEF, ADD_EGG, ORDER_TIME) VALUES (?, ?, ?, ?, ?, ?)',
+                [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]
+            );
+        }
+
+        res.status(200).json({ ORDER_NUMBER: LAST_ORDER_NUMBER });
     } catch (err) {
         console.error(err);
         res.status(500).send('Database query failed');

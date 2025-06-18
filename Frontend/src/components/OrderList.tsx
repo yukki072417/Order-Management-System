@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const OrderList = () => {
-  const WS_URL = "ws://localhost:3000/ws/order-list";
+  const WS_URL = `ws://${import.meta.env.VITE_PRIVATE_IP}:3000/ws/order-list`;
   const [orders, setOrders] = useState<any[]>([]);
 
   // WebSocketで受信したデータをlocalStorageとstateに保存

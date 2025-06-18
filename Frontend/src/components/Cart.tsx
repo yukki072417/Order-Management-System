@@ -8,8 +8,9 @@ import 'dotenv'
 
 export default function CartCard() {
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
-  const URL = 'http://localhost:3000/api/order'
+  const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/order`
 
+  // ページを読み込んだ時に、ローカルストレージのcartを読み込む
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart !== null) {
@@ -17,6 +18,7 @@ export default function CartCard() {
     }
   }, []);
 
+  // 注文確定時の処理
   const confimOrder = () => {
 
     let datas: any[] = []
@@ -33,6 +35,7 @@ export default function CartCard() {
     });
 
       if(confirm('注文確定しますか?')){
+        // 注文確定時、バックエンドに注文データを送信
         fetch(URL, {
           method: 'POST',
           headers: {
@@ -56,6 +59,7 @@ export default function CartCard() {
     }
   };
 
+  // カート内の商品を削除する処理
   const deleteCartItem = (cartItem: CartItems) => {
     const savedCart = localStorage.getItem('cart');
     let localStrageContent: CartItems[] = [];
@@ -71,7 +75,7 @@ export default function CartCard() {
         )
     );
 
-    // localStorageとstateを更新
+    // ローカルストレージと状態(state)を更新
     localStorage.setItem('cart', JSON.stringify(newCart));
     setCartItems(newCart);
   }

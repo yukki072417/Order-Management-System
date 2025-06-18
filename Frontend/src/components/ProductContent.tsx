@@ -14,6 +14,7 @@ export default function ProductContent(props: ProductContentProps) {
     <>
       <Card style={{ width: '15rem' }}>
         <Card.Img variant="top" src="https://www.dummyimage.com/150x150/000/ff" />
+        {/* <Card.Img variant="top" src="https://" /> */}
         <Card.Body>
           <Card.Title className="product-titles">{props.name}</Card.Title>
           <Card.Text className="product-prices">{props.price}円</Card.Text>

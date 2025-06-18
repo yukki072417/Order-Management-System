@@ -4,17 +4,10 @@ import type { CartItems, Product } from "./type.ts";
 import Products from "./components/Product.tsx";
 import Cart from "./components/Cart.tsx";
 import OrderList from "./components/OrderList.tsx";
+import productItems from "../configs/products.json"; // ここを追加
 import 'dotenv';
 
 export default function App() {
-  const productItems: Product[] = [
-    { name: "商品A", price: 100, itemNum: 1, imagePath: null },
-    { name: "商品B", price: 300, itemNum: 1, imagePath: null },
-    { name: "商品C", price: 500, itemNum: 1, imagePath: null },
-    { name: "商品D", price: 700, itemNum: 1, imagePath: null },
-    { name: "商品E", price: 1000, itemNum: 1, imagePath: null },
-  ];
-
   const [cartContent, setCartContent] = useState<CartItems[]>([]);
   const CartContext: any = createContext(cartContent);
 
@@ -30,14 +23,13 @@ export default function App() {
         item.addBeef === cartItems.addBeef
     );
 
+    // 既存商品が存在したときにitemNum を増やす
     if (existingProduct) {
-      
-      // 既存商品の itemNum を増やす
       existingProduct.itemNum += cartItems.itemNum;
     } else {
-
       if(cartItems.addEgg == true)  cartItems.price += 100
       if(cartItems.addBeef == true) cartItems.price += 100
+
       // 新しい商品を追加
       updatedCart.push(cartItems);
     }
@@ -51,6 +43,7 @@ export default function App() {
     }
   };
 
+  // ページを開いたとき、ローカルストレージのcartを取得
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {

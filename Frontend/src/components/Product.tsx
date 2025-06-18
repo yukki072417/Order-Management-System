@@ -6,7 +6,7 @@ import ProductContent from './ProductContent';
 
 interface ProductProps {
   products: Product[];
-  addCart: (product: CartItems) => void; // 修正: CartItems 型に変更
+  addCart: (product: CartItems) => void;
 }
 
 export default function Product({ products, addCart }: ProductProps) {

@@ -1,6 +1,7 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import { broadcastLatestOrderList } from '../routes/websocket.js'; // 追加
 dotenv.config();
 
 const app = express();
@@ -46,6 +47,8 @@ app.OrderModel = async (req, res) => {
                 [LAST_ORDER_NUMBER, name, quantity, beef, egg, mysqlTime]
             );
         }
+
+        await broadcastLatestOrderList(); // 追加：注文追加後にWebSocketで全クライアントへ通知
 
         res.status(200).json({ ORDER_NUMBER: LAST_ORDER_NUMBER });
     } catch (err) {

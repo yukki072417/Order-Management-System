@@ -1,7 +1,5 @@
 [
-  { "name": "商品A", "price": 100, "itemNum": 1, "imagePath": null },
-  { "name": "商品B", "price": 300, "itemNum": 1, "imagePath": null },
-  { "name": "商品C", "price": 500, "itemNum": 1, "imagePath": null },
-  { "name": "商品D", "price": 700, "itemNum": 1, "imagePath": null },
-  { "name": "商品E", "price": 1000, "itemNum": 1, "imagePath": null }
+  { "name": "バーガー", "price": 100, "itemNum": 1, "imagePath": "/src/assets/fff.png" },
+  { "name": "チーズバーガー", "price": 300, "itemNum": 1, "imagePath": "/src/assets/fff.png" },
+  { "name": "たません", "price": 500, "itemNum": 1, "imagePath": "/src/assets/fff.png" }
 ]

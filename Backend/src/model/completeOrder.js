@@ -17,8 +17,8 @@ app.OrderComplete = async (req, res) => {
 
     try {
         await db.query('DELETE FROM ORDERS WHERE ORDER_NUMBER = ?', [orderNumber]);
+        await broadcastLatestOrderList(); // ←ここで呼ぶ
         res.status(200).json({ result: 'success' });
-        await broadcastLatestOrderList();
     } catch (error) {
         res.status(500).json({ error: error.message });
     } finally {

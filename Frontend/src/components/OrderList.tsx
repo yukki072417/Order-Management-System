@@ -7,7 +7,7 @@ const OrderList = () => {
   const WS_URL = `ws://${import.meta.env.VITE_PRIVATE_IP}:3000/ws/order-list`;
   const [orders, setOrders] = useState<any[]>([]);
 
-  // WebSocketで受信したデータをlocalStorageとstateに保存
+  // WebSocketで受信したデータをstateに保存
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
 
@@ -17,11 +17,7 @@ const OrderList = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      // データが異なる場合のみ更新
-      if (JSON.stringify(data) !== localStorage.getItem('orders')) {
-        setOrders(data);
-        localStorage.setItem('orders', JSON.stringify(data));
-      }
+      setOrders(data); // ここでordersが更新され、即座に再レンダリングされる
     };
 
     ws.onerror = (error) => {
@@ -31,16 +27,7 @@ const OrderList = () => {
     return () => {
       ws.close();
     };
-  }, []);
-
-  // localStorageからデータを取得してstateに反映（リロード時用）
-  useEffect(() => {
-    const saved = localStorage.getItem('orders');
-    if (saved) {
-      setOrders(JSON.parse(saved));
-    }
-
-  }, []);
+  }, [WS_URL]);
 
   const completeOrder = async (targetOrder: any) => {
     if (confirm('注文完了してよろしいですか？')) {
@@ -48,7 +35,7 @@ const OrderList = () => {
         ORDER_NUMBER: targetOrder.ORDER_NUMBER,
       };
 
-      const URL = 'http://localhost:3000/api/complete-order/';
+      const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/complete-order/`;
       fetch(URL, {
         method: 'POST',
         headers: {
@@ -62,7 +49,6 @@ const OrderList = () => {
           console.error('Network response was not ok', text);
           throw new Error('Network response was not ok');
         }
-        
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -73,13 +59,13 @@ const OrderList = () => {
   return (
     <Row xs={1} md={4} className='g-4'>
       {orders.map((order: any, index: number) => (
-        <Col key={index}>
+        <Col key={order.ORDER_NUMBER ?? index}>
           <Card style={{ width: "14rem" }}>
             <Card.Body className="order-box">
               <Card.Title>注文番号: {order.ORDER_NUMBER}</Card.Title>
               <Card.Text>
                 {order.ORDER_CONTENTS.map((item: any, idx: number) => (
-                  <div className="order-content-box" key={idx}>
+                  <div className="order-content-box" key={item.ID ?? idx}>
                     <div className="order-title">商品名: {item.PRODUCT_NAME}</div>
                     <div>注文時間: {item.ORDER_TIME}</div>
                     <div>数量: {item.PRODUCT_QUANTITY}</div>

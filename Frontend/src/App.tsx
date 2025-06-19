@@ -14,29 +14,25 @@ export default function App() {
   const addCart = (cartItems: CartItems) => {
     // 既存のカートをコピー
     const updatedCart = [...cartContent];
-
+  
     // 同じ name の商品を探す（addEgg と addBeef も含めて判定）
     const existingProduct = updatedCart.find(
       (item) =>
-        item.addEgg  === cartItems.addEgg &&
-        item.name    === cartItems.name &&
+        item.addEgg === cartItems.addEgg &&
+        item.name === cartItems.name &&
         item.addBeef === cartItems.addBeef
     );
-
+  
     // 既存商品が存在したときにitemNum を増やす
     if (existingProduct) {
       existingProduct.itemNum += cartItems.itemNum;
     } else {
-      if(cartItems.addEgg == true)  cartItems.price += 100
-      if(cartItems.addBeef == true) cartItems.price += 100
-
-      // 新しい商品を追加
-      updatedCart.push(cartItems);
+      updatedCart.push(cartItems); // オプション価格はすでに加算済み
     }
-
+  
     // 更新されたカートを状態に保存
     setCartContent(updatedCart);
-
+  
     // 確認してから LocalStorage に保存
     if (confirm("カートに追加しますか?")) {
       localStorage.setItem("cart", JSON.stringify(updatedCart));

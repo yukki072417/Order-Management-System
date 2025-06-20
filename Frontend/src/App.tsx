@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import type { CartItems, Product } from "./type.ts";
+import type { CartItems } from "./type.ts";
 import Products from "./components/Product.tsx";
 import Cart from "./components/Cart.tsx";
 import OrderList from "./components/OrderList.tsx";
-import productItems from "../configs/products.json"; // ここを追加
+import OrderChart from "./components/Chart.tsx";
+import productItems from "../configs/products.json";
 import 'dotenv';
 
 export default function App() {
@@ -58,6 +59,7 @@ export default function App() {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order-list" element={<OrderList />} />
+          <Route path="/order-chart" element={<OrderChart />} />
         </Routes>
       </Router>
     </CartContext.Provider>

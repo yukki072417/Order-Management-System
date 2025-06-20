@@ -67,7 +67,14 @@ const Chart = () => {
   };
 
   useEffect(() => {
-    getChart();
+    getChart(); // 初回データ取得
+
+    const interval = setInterval(() => {
+      console.log('reload');
+      getChart(); // 5分ごとにデータ取得
+    }, 3 * 60 * 1000); // 3分 (3 * 60 * 1000 ミリ秒)
+
+    return () => clearInterval(interval); // コンポーネントがアンマウントされた際にタイマーをクリア
   }, []);
 
   if (!chartData) {

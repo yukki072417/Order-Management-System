@@ -11,8 +11,18 @@
     justify-content: right;
 }
 #order-list-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 20px;
 
+    width: 100px;
+    height: 100px;
     color: white;
-    font-size: 18px;
+}
+
+#order-list-link:hover{
+    margin-right: 20px;
+    background-color: white;
+    color: rgb(100, 100, 100);
 }

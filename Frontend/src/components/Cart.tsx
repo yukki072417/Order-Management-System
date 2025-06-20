@@ -58,7 +58,6 @@ export default function CartCard() {
               return response.json(); // 注文番号を含むレスポンスを取得
             }
           }).then((data) => {
-            console.log(data);
             alert(`注文番号は ${data.ORDER_NUMBER} です`);
             localStorage.clear();
             return location.assign('/products');

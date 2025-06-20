@@ -48,7 +48,7 @@ app.OrderModel = async (req, res) => {
             );
         }
 
-        await broadcastLatestOrderList(); // 追加：注文追加後にWebSocketで全クライアントへ通知
+        await broadcastLatestOrderList();
 
         res.status(200).json({ ORDER_NUMBER: LAST_ORDER_NUMBER });
     } catch (err) {

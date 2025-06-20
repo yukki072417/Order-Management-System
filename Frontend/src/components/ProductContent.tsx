@@ -50,8 +50,8 @@ export default function ProductContent(props: ProductContentProps) {
                 itemNum: props.itemNum,
                 addBeef: addBeef,
                 addEgg: addEgg,
-                addEggPrice: addEgg ? props.options.AddEggPrice : 0, // 卵追加価格を含める
-                addBeefPrice: addBeef ? props.options.AddBeefPrice : 0, // 肉追加価格を含める
+                addEggPrice: addEgg ? props.options.AddEggPrice : 0,
+                addBeefPrice: addBeef ? props.options.AddBeefPrice : 0,
               })
             }
             variant="primary"

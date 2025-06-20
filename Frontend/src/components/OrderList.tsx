@@ -11,10 +11,6 @@ const OrderList = () => {
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
 
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
-
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setOrders(data); // ここでordersが更新され、即座に再レンダリングされる

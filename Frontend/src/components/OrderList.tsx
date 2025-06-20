@@ -74,7 +74,7 @@ const OrderList = () => {
                   </div>
                 ))}
               </Card.Text>
-              <Button onClick={() => completeOrder(order)}>注文完了</Button>
+              <Button onClick={() => completeOrder(order)}>提供完了</Button>
             </Card.Body>
           </Card>
         </Col>

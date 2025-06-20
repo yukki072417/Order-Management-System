@@ -54,11 +54,13 @@ export default function CartCard() {
             if (!response.ok) {
               console.error('Network response was not ok');
               throw new Error('Network response was not ok');
-            }else if(response.status == 200){
-              localStorage.clear();
-              return location.assign('/products');
+            } else if (response.status === 200) {
+              return response.json(); // 注文番号を含むレスポンスを取得
             }
-            return response.json();
+          }).then((data) => {
+            alert(`注文番号は ${data.ORDER_NUMBER} です`);
+            localStorage.clear();
+            return location.assign('/products');
           }).catch((error) => {
             console.error('Error:', JSON.stringify(error));
           });
@@ -107,82 +109,3 @@ export default function CartCard() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-// import 'react';
-// import { Col, Row } from 'react-bootstrap';
-// import { Card, Button } from 'react-bootstrap';
-// import './styles/Cart.css';
-// import { useEffect, useState } from 'react';
-// import type { CartItems } from '../type';
-// import 'dotenv'
-
-// export default function CartCard() {
-//   const [cartItems, setCartItems] = useState<CartItems[]>([]);
-//   const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/order`
-
-//   // ページを読み込んだ時に、ローカルストレージのcartを読み込む
-//   useEffect(() => {
-//     const savedCart = localStorage.getItem('cart');
-//     if (savedCart !== null) {
-//       setCartItems(JSON.parse(savedCart));
-//     }
-//   }, []);
-
-
-//   // カート内の商品を削除する処理
-//   const deleteCartItem = (cartItem: CartItems) => {
-//     const savedCart = localStorage.getItem('cart');
-//     let localStrageContent: CartItems[] = [];
-//     if (savedCart !== null) localStrageContent = JSON.parse(savedCart);
-
-//     // 条件に合うものを除外
-//     const newCart = localStrageContent.filter(
-//       content =>
-//         !(
-//           content.name === cartItem.name &&
-//           content.addEgg === cartItem.addEgg &&
-//           content.addBeef === cartItem.addBeef
-//         )
-//     );
-
-//     // ローカルストレージと状態(state)を更新
-//     localStorage.setItem('cart', JSON.stringify(newCart));
-//     setCartItems(newCart);
-//   }
-
-//   return (
-//     <>
-//       <Row xs={1} md={5} className='g-4'>
-//         {cartItems.length > 0 ? (
-//           cartItems.map((cartItem: CartItems, idx: number) => (
-//             <Col key={idx}>
-//               <Card key={idx} className='cart-contents' style={{ width: '13rem' }}>
-//                 <Card.Body>
-//                   <Card.Title className='cart-titles'>{cartItem.name}</Card.Title>
-//                   <Card.Text className='cart-prices'>{cartItem.price}円</Card.Text>
-//                   <Card.Text className='cart-prices'>{cartItem.itemNum}個</Card.Text>
-//                   {cartItem.addEgg && <Card.Text>卵追加 (+100円)</Card.Text>}
-//                   {cartItem.addBeef && <Card.Text>お肉追加 (+100円)</Card.Text>}
-//                   <Button variant='danger' onClick={() => deleteCartItem(cartItem)}>削除</Button>
-//                 </Card.Body>
-//               </Card>
-//             </Col>
-//           ))
-//         ) : (
-//           <p>カートに商品がありません。</p>
-//         )}
-//       </Row>
-
-//       <Button onClick={confimOrder} id='order-submit'>
-//         注文確定
-//       </Button>
-//     </>
-//   );
-// }

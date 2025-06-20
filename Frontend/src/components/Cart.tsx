@@ -5,6 +5,8 @@ import './styles/Cart.css'
 
 export default function CartCard() {
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
+
+  //　プライベートIPアドレスを環境変数から取得
   const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/order`;
 
   // ページを読み込んだ時に、ローカルストレージのcartを読み込む

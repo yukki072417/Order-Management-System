@@ -13,7 +13,7 @@ async function fetchOrderList() {
   return data;
 }
 
-//データベースが更新されたときに、クライアントに変更内容を送信する関数。データベースに変更を加えたときは、必ず実行すること
+//データベースが更新されたときに、クライアントに変更内容を送信する関数。データベースに変更を加える処理を書いたときは、必ず実行すること
 export async function broadcastLatestOrderList() {
   try {
     const newOrderList = await fetchOrderList();
@@ -40,7 +40,6 @@ const websocketRouter = (app) => {
     }
     ws.on('close', () => {
       clients.delete(ws);
-      console.log('WebSocket connection closed');
     });
   });
 };

@@ -25,7 +25,7 @@
     "itemNum": 1,
     "imagePath": "/src/assets/Tamasen.png",
     "options": {
-      "AddBeefPrice": 100,
+      "AddBeefPrice": 0,
       "AddEggPrice": 100
     }
   }

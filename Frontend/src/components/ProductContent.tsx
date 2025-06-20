@@ -15,13 +15,14 @@ export default function ProductContent(props: ProductContentProps) {
       <Card style={{ width: "15rem" }}>
         <Card.Img variant="top" src={`${props.imagePath}`} />
         <Card.Body>
-          <Card.Title className="product-titles">{props.name}</Card.Title>
-          <Card.Text className="product-prices">{props.price}円</Card.Text>
-          <Card.Text className="product-prices">{props.itemNum}個</Card.Text>
+          <h3 className="product-titles">{props.name}</h3>
+          <Card.Text className="product-prices">{props.price}円 / {props.itemNum}個</Card.Text>
+          {/* <Card.Text className="product-prices"></Card.Text> */}
 
           <Form>
+            <h5>追加オプション</h5>
             <label className="labels">
-              卵を追加(+{props.options.AddEggPrice}円)
+              卵(+{props.options.AddEggPrice}円)
             </label>
             <Form.Check
               type="switch"
@@ -29,7 +30,7 @@ export default function ProductContent(props: ProductContentProps) {
               onChange={(e) => setAddEgg(e.target.checked)}
             />
             <label className="labels">
-              お肉を追加(+{props.options.AddBeefPrice}円)
+              お肉(+{props.options.AddBeefPrice}円)
             </label>
             <Form.Check
               type="switch"

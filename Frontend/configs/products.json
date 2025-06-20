@@ -3,7 +3,7 @@
     "name": "バーガー",
     "price": 300,
     "itemNum": 1,
-    "imagePath": "/src/assets/fff.png",
+    "imagePath": "/src/assets/NomalBuger.png",
     "options": {
       "AddBeefPrice": 100,
       "AddEggPrice": 100
@@ -13,7 +13,7 @@
     "name": "チーズバーガー",
     "price": 400,
     "itemNum": 1,
-    "imagePath": "/src/assets/fff.png",
+    "imagePath": "/src/assets/CheeseBuger.png",
     "options": {
       "AddBeefPrice": 100,
       "AddEggPrice": 100
@@ -23,7 +23,7 @@
     "name": "たません",
     "price": 200,
     "itemNum": 1,
-    "imagePath": "/src/assets/fff.png",
+    "imagePath": "/src/assets/Tamasen.png",
     "options": {
       "AddBeefPrice": 100,
       "AddEggPrice": 100

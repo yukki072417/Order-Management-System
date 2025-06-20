@@ -1,13 +1,11 @@
-import 'react';
 import './styles/Products.css';
-import type { Product } from '../type';
+import type { Product, CartItems } from '../type';
 import { Col, Row } from 'react-bootstrap';
 import ProductContent from './ProductContent';
 
-// ...existing code...
 interface ProductProps {
   products: Product[];
-  addCart: (product: Product) => void;
+  addCart: (product: CartItems) => void;
 }
 
 export default function Product({ products, addCart }: ProductProps) {
@@ -18,12 +16,11 @@ export default function Product({ products, addCart }: ProductProps) {
           <Col key={index}>
             <ProductContent
               imagePath={item.imagePath}
-              name={item.name} 
-              price={item.price} 
-              itemNum={item.itemNum} 
-              addEgg={item.addEgg} 
-              addBeef={item.addBeef} 
-              addCart={() => addCart(item)}
+              name={item.name}
+              price={item.price}
+              itemNum={item.itemNum}
+              options={item.options} // オプション情報を渡す
+              addCart={addCart}
             />
           </Col>
         ))}
@@ -31,4 +28,3 @@ export default function Product({ products, addCart }: ProductProps) {
     </>
   );
 }
-// ...existing code...

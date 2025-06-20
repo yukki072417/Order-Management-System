@@ -1,48 +1,45 @@
 import { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import type { Product } from "./type.ts";
+import type { CartItems, Product } from "./type.ts";
 import Products from "./components/Product.tsx";
 import Cart from "./components/Cart.tsx";
-import ShowNumber from "./components/ShowNumber.tsx";
+import OrderList from "./components/OrderList.tsx";
+import productItems from "../configs/products.json"; // ここを追加
+import 'dotenv';
 
 export default function App() {
-  const productItems: Product[] = [
-    { name: "商品A", price: 100, itemNum: 1, imagePath: null, addEgg: false, addBeef: false },
-    { name: "商品B", price: 300, itemNum: 1, imagePath: null, addEgg: false, addBeef: false },
-    { name: "商品C", price: 500, itemNum: 1, imagePath: null, addEgg: false, addBeef: false },
-    { name: "商品D", price: 700, itemNum: 1, imagePath: null, addEgg: false, addBeef: false },
-    { name: "商品E", price: 1000, itemNum: 1, imagePath: null, addEgg: false, addBeef: false },
-  ];
-
-  const [cartContent, setCartContent] = useState<Product[]>([]);
+  const [cartContent, setCartContent] = useState<CartItems[]>([]);
   const CartContext: any = createContext(cartContent);
 
-  const addCart = (product: Product) => {
+  const addCart = (cartItems: CartItems) => {
     // 既存のカートをコピー
     const updatedCart = [...cartContent];
-
-    // 同じ name の商品を探す
+  
+    // 同じ name の商品を探す（addEgg と addBeef も含めて判定）
     const existingProduct = updatedCart.find(
-      (item) => item.name === product.name
+      (item) =>
+        item.addEgg === cartItems.addEgg &&
+        item.name === cartItems.name &&
+        item.addBeef === cartItems.addBeef
     );
-
+  
+    // 既存商品が存在したときにitemNum を増やす
     if (existingProduct) {
-      // 既存商品の itemNum を増やす
-      existingProduct.itemNum += product.itemNum;
+      existingProduct.itemNum += cartItems.itemNum;
     } else {
-      // 新しい商品を追加
-      updatedCart.push(product);
+      updatedCart.push(cartItems); // オプション価格はすでに加算済み
     }
-
+  
     // 更新されたカートを状態に保存
     setCartContent(updatedCart);
-
+  
     // 確認してから LocalStorage に保存
     if (confirm("カートに追加しますか?")) {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
 
+  // ページを開いたとき、ローカルストレージのcartを取得
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
@@ -60,7 +57,7 @@ export default function App() {
             element={<Products products={productItems} addCart={addCart} />}
           />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/show-order" element={<ShowNumber />} />
+          <Route path="/order-list" element={<OrderList />} />
         </Routes>
       </Router>
     </CartContext.Provider>

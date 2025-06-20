@@ -5,10 +5,8 @@ import App from './App.tsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
   <>
     <Header />
     <App />
   </>
-  // </StrictMode>,
 )

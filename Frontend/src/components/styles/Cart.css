@@ -8,3 +8,12 @@
     display: block;
     margin: 30px auto 0 auto; /* 上30px, 左右auto, 下0 */
 }
+.total-price{
+    text-align: center;
+}
+.cart-empty{
+    text-align: center;
+}
+.confirm-order{
+    text-align: center;
+}

@@ -1,0 +1,11 @@
+.order-content-box{
+    margin: auto;
+    margin-top: 15px;
+    
+    border-style: solid;
+    border-width: 0.5px;
+    width: 180px;
+}
+.order-title{
+    font-weight: 600;
+}

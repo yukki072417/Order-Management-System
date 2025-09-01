@@ -1,10 +1,42 @@
-.cart-contents{
+.cart-contents {
     margin: auto;
-
-    margin-top:    20px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    width: 25rem; /* 横幅を25remに設定 */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* カードに影を追加 */
+    border-radius: 10px; /* カードの角を丸くする */
 }
-#order-submit{
+
+#order-submit {
     display: block;
-    margin: 30px auto 0 auto; /* 上30px, 左右auto, 下0 */
+
+     /* 上30px, 左右auto, 下0 */
+    /* margin: 30px auto 0 auto; */
+}
+
+.cart-titles {
+    font-size: 18px; /* タイトルのフォントサイズを調整 */
+    font-weight: bold; /* タイトルを太字にする */
+    text-align: center; /* タイトルを中央揃えにする */
+}
+
+.cart-prices {
+    font-size: 16px; /* 価格のフォントサイズを調整 */
+    color: #333; /* 価格の文字色を設定 */
+}
+
+.total-price {
+    text-align: center;
+    font-size: 20px; /* 合計金額のフォントサイズを調整 */
+    font-weight: bold; /* 合計金額を太字にする */
+    margin-top: 20px; /* 上部に余白を追加 */
+}
+
+.cart-empty {
+    text-align: center;
+}
+
+.confirm-order {
+    text-align: center;
+    margin-top: 20px; /* 上部に余白を追加 */
 }

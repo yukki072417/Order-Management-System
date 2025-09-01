@@ -11,10 +11,6 @@ const OrderList = () => {
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
 
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
-
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setOrders(data); // ここでordersが更新され、即座に再レンダリングされる
@@ -62,23 +58,23 @@ const OrderList = () => {
         <Col key={order.ORDER_NUMBER ?? index}>
           <Card style={{ width: "14rem" }}>
             <Card.Body className="order-box">
-              <Card.Title>注文番号: {order.ORDER_NUMBER}</Card.Title>
+              <h4>注文番号: {order.ORDER_NUMBER}</h4>
               <Card.Text>
                 {order.ORDER_CONTENTS.map((item: any, idx: number) => (
                   <div className="order-content-box" key={item.ID ?? idx}>
-                    <div className="order-title">商品名: {item.PRODUCT_NAME}</div>
-                    <div>注文時間: {item.ORDER_TIME}</div>
-                    <div>数量: {item.PRODUCT_QUANTITY}</div>
+                    <div className="order-title"><h5>商品名: {item.PRODUCT_NAME}</h5></div>
+                    <div><h6>数量: {item.PRODUCT_QUANTITY}</h6></div>
                     <div style={{ color: item.ADD_EGG ? "red" : "inherit" }}>
                       卵追加: {item.ADD_EGG ? "あり" : "なし"}
                     </div>
                     <div style={{ color: item.ADD_BEEF ? "red" : "inherit" }}>
                       肉追加: {item.ADD_BEEF ? "あり" : "なし"}
                     </div>
+                    <div>注文時間: {item.ORDER_TIME}</div>
                   </div>
                 ))}
               </Card.Text>
-              <Button onClick={() => completeOrder(order)}>注文完了</Button>
+              <Button onClick={() => completeOrder(order)}>提供完了</Button>
             </Card.Body>
           </Card>
         </Col>

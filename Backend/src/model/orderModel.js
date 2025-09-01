@@ -1,13 +1,13 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
-import { broadcastLatestOrderList } from '../routes/websocket.js'; // 追加
+import { broadcastLatestOrderList } from '../routes/websocket.js';
 dotenv.config();
 
 const app = express();
 
 app.OrderModel = async (req, res) => {
-    const body = req.body; // 配列で受け取る
+    const body = req.body;
 
     const now = new Date();
     now.setHours(now.getHours() + 9); // 日本時間
@@ -48,7 +48,7 @@ app.OrderModel = async (req, res) => {
             );
         }
 
-        await broadcastLatestOrderList(); // 追加：注文追加後にWebSocketで全クライアントへ通知
+        await broadcastLatestOrderList();
 
         res.status(200).json({ ORDER_NUMBER: LAST_ORDER_NUMBER });
     } catch (err) {

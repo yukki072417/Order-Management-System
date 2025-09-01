@@ -1,9 +1,5 @@
-FROM node:23 AS Frontend
+FROM node:20 AS Frontend
 WORKDIR /usr/app/
-# COPY ./Frontend /usr/app/
-# RUN npm install
 
-FROM node:23 AS Backend
+FROM node:20 AS Backend
 WORKDIR /usr/app/
-# COPY ./Backend /usr/app/
-# RUN npm install

@@ -1,4 +1,3 @@
-import 'react';
 import './styles/Products.css';
 import type { Product, CartItems } from '../type';
 import { Col, Row } from 'react-bootstrap';
@@ -20,7 +19,8 @@ export default function Product({ products, addCart }: ProductProps) {
               name={item.name}
               price={item.price}
               itemNum={item.itemNum}
-              addCart={addCart} // 修正: 直接渡す
+              options={item.options} // オプション情報を渡す
+              addCart={addCart}
             />
           </Col>
         ))}

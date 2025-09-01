@@ -35,6 +35,8 @@ app.OrderListModel = async (req, res) => {
         res.json(result);
     } catch (error) {
         res.json({ 'ERROR': error });
+    }finally{
+        db.end(); //　アプリが落ちた原因
     }
 }
 

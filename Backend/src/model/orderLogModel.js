@@ -19,7 +19,9 @@ app.OrderLogModel = async (req, res) => {
         const [results] = await db.query('SELECT * FROM ORDER_LOG');
         await res.send(results)
     }catch(e){
-
+        console.log(e);
+    } finally {
+        db.end();
     }
 };
 

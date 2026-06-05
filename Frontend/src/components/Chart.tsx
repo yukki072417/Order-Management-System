@@ -16,7 +16,7 @@ const Chart = () => {
   const [chartData, setChartData] = useState<any>(null);
 
   const getChart = async () => {
-    const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/get-order-logs`;
+    const URL = `http://localhost:3000/api/get-order-logs`;
 
     fetch(URL, {
       method: "GET",

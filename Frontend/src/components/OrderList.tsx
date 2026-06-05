@@ -31,7 +31,7 @@ const OrderList = () => {
         ORDER_NUMBER: targetOrder.ORDER_NUMBER,
       };
 
-      const URL = `http://${import.meta.env.VITE_PRIVATE_IP}:3000/api/complete-order/`;
+      const URL = `http://localhost:3000/api/complete-order/`;
       fetch(URL, {
         method: 'POST',
         headers: {

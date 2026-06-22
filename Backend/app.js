@@ -1,17 +1,43 @@
-import express from 'express';
-import cors from 'cors';
-import router from './src/routes/route.js';
-import websocket from './src/routes/websocket.js'
-import expressWs from 'express-ws';
+import express from "express";
+import cors from "cors";
+import expressWs from "express-ws";
+
+import { MysqlOrderRepository } from "./internal/infrastructure/db/MysqlOrderRepository.js";
+import { MysqlOrderLogRepository } from "./internal/infrastructure/db/MysqlOrderLogRepository.js";
+import { WsBroadcaster } from "./internal/infrastructure/ws/WsBroadcaster.js";
+
+import { PlaceOrderUseCase } from "./internal/usecase/PlaceOrderUseCase.js";
+import { GetOrderListUseCase } from "./internal/usecase/GetOrderListUseCase.js";
+import { CompleteOrderUseCase } from "./internal/usecase/CompleteOrderUseCase.js";
+import { GetOrderLogUseCase } from "./internal/usecase/GetOrderLogUseCase.js";
+
+import { createRouter } from "./internal/router/router.js";
+import { createWebsocketRouter } from "./internal/router/websocket.js";
 
 const app = express();
 const PORT = 3000;
 
+// --- Infrastructure ---
+const orderRepository = new MysqlOrderRepository();
+const orderLogRepository = new MysqlOrderLogRepository();
+const clients = new Set();
+const broadcaster = new WsBroadcaster(clients, orderRepository);
+
+// --- Use Cases ---
+const placeOrderUseCase = new PlaceOrderUseCase(orderRepository, orderLogRepository, broadcaster);
+const getOrderListUseCase = new GetOrderListUseCase(orderRepository);
+const completeOrderUseCase = new CompleteOrderUseCase(orderRepository, broadcaster);
+const getOrderLogUseCase = new GetOrderLogUseCase(orderLogRepository);
+
+// --- Express Setup ---
 app.use(cors());
-expressWs(app)
-websocket(app);
-app.use('/api', router);
+app.use(express.json());
+expressWs(app);
+
+// --- Routes ---
+createWebsocketRouter(app, clients, getOrderListUseCase);
+app.use("/api", createRouter({ placeOrderUseCase, getOrderListUseCase, completeOrderUseCase, getOrderLogUseCase }));
 
 app.listen(PORT, () => {
-    console.log('Server launched PORT:' + PORT);
+    console.log("Server launched PORT:" + PORT);
 });

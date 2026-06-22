@@ -1,5 +1,5 @@
-import { IOrderRepository } from "../../repository/IOrderRepository";
-import { createConnection } from "./connection";
+import { IOrderRepository } from "../../repository/IOrderRepository.js";
+import { createConnection } from "./connection.js";
 
 export class MysqlOrderRepository extends IOrderRepository {
     async create(orders) {

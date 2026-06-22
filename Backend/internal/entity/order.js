@@ -1,4 +1,4 @@
-import { arrayCheckType } from "../utils/checkType";
+import { arrayCheckType } from "../utils/checkType.js";
 
 export class Order {
     constructor(

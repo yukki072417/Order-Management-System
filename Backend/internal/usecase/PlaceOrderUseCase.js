@@ -1,6 +1,6 @@
-import { Order } from "../entity/order";
-import { OrderLog } from "../entity/orderLog";
-import { getJapanTime } from "../utils/japanTime";
+import { Order } from "../entity/order.js";
+import { OrderLog } from "../entity/orderLog.js";
+import { getJapanTime } from "../utils/japanTime.js";
 
 export class PlaceOrderUseCase {
     constructor(orderRepository, orderLogRepository, broadcaster) {

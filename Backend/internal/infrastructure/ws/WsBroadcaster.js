@@ -1,4 +1,4 @@
-import { IBroadcaster } from "../../broadcaster/IBroadcaster";
+import { IBroadcaster } from "../../broadcaster/IBroadcaster.js";
 
 export class WsBroadcaster extends IBroadcaster {
     /** @param {Set} clients WebSocket接続中のクライアント集合 */

@@ -1,7 +1,13 @@
-import { IOrderLogRepository } from "../../repository/IOrderLogRepository";
-import { createConnection } from "./connection";
+import { IOrderLogRepository } from "../../repository/IOrderLogRepository.js";
+import { createConnection } from "./connection.js";
 
 const INITIAL_ORDER_NUMBER = 101;
+
+function normalizeTime(time) {
+    if (!time) return time;
+    const [h, m, s] = time.split(":");
+    return `${parseInt(h, 10)}:${m}:${s}`;
+}
 
 export class MysqlOrderLogRepository extends IOrderLogRepository {
     async create(orders) {
@@ -22,7 +28,10 @@ export class MysqlOrderLogRepository extends IOrderLogRepository {
         const db = await createConnection();
         try {
             const [rows] = await db.query("SELECT * FROM ORDER_LOG");
-            return rows;
+            return rows.map(row => ({
+                ...row,
+                ORDER_TIME: normalizeTime(row.ORDER_TIME),
+            }));
         } finally {
             await db.end();
         }

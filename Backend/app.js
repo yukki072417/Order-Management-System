@@ -11,32 +11,26 @@ import { GetOrderListUseCase } from "./internal/usecase/GetOrderListUseCase.js";
 import { CompleteOrderUseCase } from "./internal/usecase/CompleteOrderUseCase.js";
 import { GetOrderLogUseCase } from "./internal/usecase/GetOrderLogUseCase.js";
 
-import { createRouter } from "./internal/router/router.js";
-import { createWebsocketRouter } from "./internal/router/websocket.js";
+import { setupRoutes } from "./internal/router/index.js";
 
 const app = express();
 const PORT = 3000;
 
-// --- Infrastructure ---
 const orderRepository = new MysqlOrderRepository();
 const orderLogRepository = new MysqlOrderLogRepository();
 const clients = new Set();
 const broadcaster = new WsBroadcaster(clients, orderRepository);
 
-// --- Use Cases ---
 const placeOrderUseCase = new PlaceOrderUseCase(orderRepository, orderLogRepository, broadcaster);
 const getOrderListUseCase = new GetOrderListUseCase(orderRepository);
 const completeOrderUseCase = new CompleteOrderUseCase(orderRepository, broadcaster);
 const getOrderLogUseCase = new GetOrderLogUseCase(orderLogRepository);
 
-// --- Express Setup ---
 app.use(cors());
 app.use(express.json());
 expressWs(app);
 
-// --- Routes ---
-createWebsocketRouter(app, clients, getOrderListUseCase);
-app.use("/api", createRouter({ placeOrderUseCase, getOrderListUseCase, completeOrderUseCase, getOrderLogUseCase }));
+setupRoutes(app, { placeOrderUseCase, getOrderListUseCase, completeOrderUseCase, getOrderLogUseCase, clients });
 
 app.listen(PORT, () => {
     console.log("Server launched PORT:" + PORT);
